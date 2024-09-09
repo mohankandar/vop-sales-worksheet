@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.wynd.vop.sales.worksheet</groupId>
+        <artifactId>vop-sales-worksheet-reactor</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>vop-sales-worksheet</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
+    <description>Worksheet Service Implementation for VOP Project</description>
+
+    <properties>
+        <vop-framework.version>1.0.3</vop-framework.version>
+        <checkstyle.config.location>${basedir}/vop-checkstyle-java8.xml</checkstyle.config.location>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.wynd.vop.framework</groupId>
+            <artifactId>vop-framework-libraries</artifactId>
+            <version>${vop-framework.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.wynd.vop.framework</groupId>
+            <artifactId>vop-framework-autoconfigure</artifactId>
+            <version>${vop-framework.version}</version>
+        </dependency>
+
+        <!-- spring-boot dependencies -->
+        <!-- Spring Boot starter for Tomcat, which provides embedded Tomcat server for your Spring Boot application. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
+        <!-- Spring Boot configuration processor, used for generating metadata for configuration properties. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+            <!-- Optional dependency, used only during compile time. -->
+        </dependency>
+        <!-- Spring Cloud starter for bootstrap, used for loading configuration from external sources like Consul, Config Server, etc. -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <exclusions>
+                <!-- Excluding the BouncyCastle provider library which might conflict with other security configurations. -->
+                <exclusion>
+                    <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcprov-jdk15on</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Spring Boot starter for Aspect-Oriented Programming (AOP), useful for implementing cross-cutting concerns like logging and transactions. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!--
+        Spring Cloud Sleuth is a distributed tracing library that helps with tracking and diagnosing
+        requests as they travel across multiple microservices. It provides automatic generation
+        of trace IDs and span IDs to correlate logs and track the flow of requests across a
+        distributed system. It integrates with tracing systems like Zipkin or OpenTelemetry,
+        facilitating better visibility and debugging capabilities for complex architectures.-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <!-- Logstash Logback encoder for formatting log messages in Logstash format, often used with ELK stack for log analysis. -->
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+        <!-- Janino is a lightweight Java compiler used for runtime compilation. Used for Logger config load -->
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+        </dependency>
+        <!-- Jackson JAX-RS base module for JSON processing in JAX-RS (Java API for RESTful Web Services). -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-base</artifactId>
+        </dependency>
+        <!-- Jackson JAX-RS JSON provider for serializing and deserializing JSON data in JAX-RS. -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.jaxrs</groupId>
+            <artifactId>jackson-jaxrs-json-provider</artifactId>
+        </dependency>
+        <!-- Jackson module for JAXB annotations, used to provide JAXB (Java Architecture for XML Binding) annotations for JSON processing. -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+        </dependency>
+        <!-- Jackson core annotations for JSON processing. -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+        </dependency>
+        <!-- OpenAPI Generator library for generating API client libraries, server stubs, and API documentation. -->
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator</artifactId>
+            <exclusions>
+                <!-- Excluding conflicting or unnecessary dependencies that are not required for your use case. -->
+                <exclusion>
+                    <groupId>javax.activation</groupId>
+                    <artifactId>activation</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.github.fge</groupId>
+                    <artifactId>jackson-coreutils</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.swagger.core.v3</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>joda-time</groupId>
+                    <artifactId>joda-time</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.code.findbugs</groupId>
+                    <artifactId>jsr305</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Jolokia core for JMX (Java Management Extensions) monitoring and management over HTTP. -->
+        <dependency>
+            <groupId>org.jolokia</groupId>
+            <artifactId>jolokia-core</artifactId>
+        </dependency>
+        <!-- Apache Commons Lang3 provides extra functionality for working with Java core classes, such as `String` and `Number`. -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <!-- Spring Boot starter for test utilities, including JUnit, Hamcrest, and Mockito. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test
+            </scope>
+            <!-- Scope is set to test, meaning this dependency is only used during testing. -->
+        </dependency>
+        <!-- JUnit Vintage engine for running JUnit 3 and 4 tests on JUnit 5 platform. -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <!-- JsonPath library for parsing and querying JSON data. Useful for writing JSON-based test assertions. -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Test dependendency -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.auto.service</groupId>
+            <artifactId>auto-service</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>templating-maven-plugin</artifactId>
+                <version>${templating-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>filtering-java-templates</id>
+                        <goals>
+                            <goal>filter-sources</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${basedir}/src/main/java-template</sourceDirectory>
+                            <outputDirectory>${project.build.directory}/generated-sources/java-template
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/java-template</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar-maven-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.1.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>8.9</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <violationSeverity>warning</violationSeverity>
+                    <consoleOutput>true</consoleOutput>
+                    <failsOnError>true</failsOnError>
+                    <sourceDirectories>
+                        <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                    </sourceDirectories>
+                    <!--					<excludes>-->
+                    <!--						**/com/wynd/vop/**-->
+                    <!--					</excludes>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>checkstyle-check</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>org-openapitools-codegen-worksheet</id>
+            <activation>
+                <file>
+                    <exists>${basedir}/src/main/resources/openapi/openapi.yml</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.openapitools</groupId>
+                        <artifactId>openapi-generator-maven-plugin</artifactId>
+                        <version>${openapi.codegen.version}</version>
+                        <executions>
+                            <execution>
+                                <id>generate-openapi-worksheet</id>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <inputSpec>${basedir}/src/main/resources/openapi/openapi.yml</inputSpec>
+                                    <output>${project.build.directory}/generated-sources</output>
+                                    <ignoreFileOverride>${basedir}/.openapi-generator-ignore</ignoreFileOverride>
+                                    <apiPackage>com.wynd.vop.sales.worksheet.api</apiPackage>
+                                    <modelPackage>com.wynd.vop.sales.worksheet.api.model.v1</modelPackage>
+                                    <importMappings>
+                                        ProviderResponse=com.wynd.vop.framework.rest.provider.ProviderResponse,
+                                        ProviderRequest=com.wynd.vop.framework.rest.provider.ProviderRequest,
+                                        Message=com.wynd.vop.framework.rest.provider.Message,
+                                        Worksheet=com.wynd.vop.framework.security.model.Worksheet,
+                                        ProviderTransferObjectMarker=com.wynd.vop.framework.transfer.ProviderTransferObjectMarker,
+                                        PresetPackageResponse=com.wynd.vop.sales.worksheet.model.PresetPackageResponse
+                                    </importMappings>
+                                    <addCompileSourceRoot>false</addCompileSourceRoot>
+                                    <configHelp>false</configHelp>
+                                    <verbose>false</verbose>
+                                    <generatorName>spring</generatorName>
+                                    <generateApiDocumentation>false</generateApiDocumentation>
+                                    <generateApiTests>false</generateApiTests>
+                                    <generateApis>true</generateApis>
+                                    <generateModels>true</generateModels>
+                                    <generateModelTests>false</generateModelTests>
+                                    <generateModelDocumentation>false</generateModelDocumentation>
+                                    <generateSupportingFiles>false</generateSupportingFiles>
+                                    <languageSpecificPrimitives>true</languageSpecificPrimitives>
+                                    <templateDirectory>${basedir}/src/main/resources/openapi/mustache
+                                    </templateDirectory>
+                                    <configOptions>
+                                        <serializableModel>true</serializableModel>
+                                        <sourceFolder>openapi</sourceFolder>
+                                        <interfaceOnly>true</interfaceOnly>
+                                        <implicitHeaders>false</implicitHeaders>
+                                        <java8>false</java8>
+                                        <useBeanValidation>true</useBeanValidation>
+                                        <performBeanValidation>true</performBeanValidation>
+                                        <useTags>true</useTags>
+                                        <swaggerDocketConfig>false</swaggerDocketConfig>
+                                    </configOptions>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.puppycrawl.tools</groupId>
+                                <artifactId>checkstyle</artifactId>
+                                <version>8.9</version>
+                            </dependency>
+                        </dependencies>
+                        <configuration>
+                            <violationSeverity>warning</violationSeverity>
+                            <consoleOutput>true</consoleOutput>
+                            <failsOnError>true</failsOnError>
+                            <sourceDirectories>
+                                <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                            </sourceDirectories>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+                <!-- the following is only necessary if you are using eclipse, STS and m2e -->
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.m2e</groupId>
+                            <artifactId>lifecycle-mapping</artifactId>
+                            <configuration>
+                                <lifecycleMappingMetadata>
+                                    <pluginExecutions>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.openapitools</groupId>
+                                                <artifactId>openapi-generator-maven-plugin</artifactId>
+                                                <versionRange>[${openapi.codegen.version},)</versionRange>
+                                                <goals>
+                                                    <goal>generate</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute/>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                                                <artifactId>replacer</artifactId>
+                                                <versionRange>[${google.codereplacer.version},)</versionRange>
+                                                <goals>
+                                                    <goal>replace</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute/>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.apache.maven.plugins</groupId>
+                                                <artifactId>maven-antrun-plugin</artifactId>
+                                                <versionRange>[${maven-antrun-plugin.version},)</versionRange>
+                                                <goals>
+                                                    <goal>run</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <execute/>
+                                            </action>
+                                        </pluginExecution>
+                                    </pluginExecutions>
+                                </lifecycleMappingMetadata>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
+</project>
