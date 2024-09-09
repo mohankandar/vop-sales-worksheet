@@ -167,10 +167,6 @@
             <artifactId>junit-vintage-engine</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
         <!-- JsonPath library for parsing and querying JSON data. Useful for writing JSON-based test assertions. -->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
